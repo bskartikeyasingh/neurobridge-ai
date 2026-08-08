@@ -16,7 +16,7 @@ python-multipart
 httpx
 authlib
 itsdangerous
-
+email-validator
 groq
 
 aiofiles
