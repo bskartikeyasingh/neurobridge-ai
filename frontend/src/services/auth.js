@@ -69,9 +69,18 @@ export async function logout() {
 export function getCurrentUser() {
   const user = localStorage.getItem("user");
 
-  if (!user) return null;
+  if (!user || user === "undefined" || user === "null") {
+    localStorage.removeItem("user");
+    return null;
+  }
 
-  return JSON.parse(user);
+  try {
+    return JSON.parse(user);
+  } catch (error) {
+    console.error("Invalid user data in localStorage:", error);
+    localStorage.removeItem("user");
+    return null;
+  }
 }
 
 export function getToken() {

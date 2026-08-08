@@ -5,13 +5,27 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem("user");
+ useEffect(() => {
+  const savedUser = localStorage.getItem("user");
 
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+  if (!savedUser || savedUser === "undefined" || savedUser === "null") {
+    localStorage.removeItem("user");
+    return;
+  }
+
+  try {
+    const parsedUser = JSON.parse(savedUser);
+
+    if (parsedUser && typeof parsedUser === "object") {
+      setUser(parsedUser);
+    } else {
+      localStorage.removeItem("user");
     }
-  }, []);
+  } catch (error) {
+    console.error("Invalid saved user data:", error);
+    localStorage.removeItem("user");
+  }
+}, []);
 
   const login = (userData) => {
     localStorage.setItem("user", JSON.stringify(userData));
