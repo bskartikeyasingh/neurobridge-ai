@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://neurobridge-backend-xjnl.onrender.com",
+  baseURL: "https://neurobridge-backend-xjnl.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },
